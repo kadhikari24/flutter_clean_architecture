@@ -1,17 +1,19 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:complete_advanced_flutter/domain/model/authentication.dart';
 import 'package:complete_advanced_flutter/domain/usecase/login_usecase.dart';
 import 'package:complete_advanced_flutter/presentation/base/base_view_model.dart';
 import 'package:complete_advanced_flutter/presentation/common/login_object.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:complete_advanced_flutter/presentation/common/state_renderer/state_render_impl.dart';
+import 'package:complete_advanced_flutter/presentation/common/state_renderer/state_renderer.dart';
+import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
 
-class LoginViewModel
-    implements BaseViewModel, LoginViewModelInput, LoginViewModelOutput {
+class LoginViewModel extends BaseViewModel
+    implements LoginViewModelInput, LoginViewModelOutput {
   final _userNameStreamController = StreamController<String>.broadcast();
   final _passwordStreamController = StreamController<String>.broadcast();
   final _isAllInputsValidStreamController = StreamController<void>.broadcast();
+  final isUserLoggedInSuccessfully = StreamController<bool>.broadcast();
   var loginObject = const LoginObject(email: "", password: "");
 
   final LoginUseCase? _loginUseCase;
@@ -23,10 +25,13 @@ class LoginViewModel
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfully.close();
   }
 
   @override
-  void start() {}
+  void start() {
+    inputState.add(ContentState());
+  }
 
   @override
   Sink get inputPassword => _passwordStreamController.sink;
@@ -36,12 +41,21 @@ class LoginViewModel
 
   @override
   login() async {
+    // show loading
+    inputState.add(LoadingState(
+        stateRendererType: StateRendererType.popupLoading,
+        message: AppStrings.loading));
+
+    // call api and check the result
     (await _loginUseCase?.execute(
             LoginUseCaseInput(loginObject.email, loginObject.password)))
         ?.fold((failure) {
-      debugPrint(failure.message);
+      inputState.add(ErrorState(
+          stateRendererType: StateRendererType.popupErrorState,
+          message: failure.message));
     }, (Authentication authentication) {
-      debugPrint(authentication.toString());
+      inputState.add(ContentState());
+      isUserLoggedInSuccessfully.add(true);
     });
   }
 

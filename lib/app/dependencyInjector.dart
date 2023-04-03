@@ -5,7 +5,9 @@ import 'package:complete_advanced_flutter/data/network/dio_factory.dart';
 import 'package:complete_advanced_flutter/data/network/network_info.dart';
 import 'package:complete_advanced_flutter/data/respository/repository_impl.dart';
 import 'package:complete_advanced_flutter/domain/repository/repository.dart';
+import 'package:complete_advanced_flutter/domain/usecase/forgot_password_usecase.dart';
 import 'package:complete_advanced_flutter/domain/usecase/login_usecase.dart';
+import 'package:complete_advanced_flutter/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:complete_advanced_flutter/presentation/login/login_viewmodel.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:dio/dio.dart';
@@ -49,9 +51,15 @@ Future<void> initAppModule() async {
 
 void initLoginModule() {
   if (!GetIt.I.isRegistered<LoginUseCase>()) {
-    instance
-        .registerLazySingleton<LoginUseCase>(() => LoginUseCase(instance()));
-    instance.registerLazySingleton<LoginViewModel>(
-        () => LoginViewModel(instance()));
+    instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
+    instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+  }
+}
+
+
+void initForgotPasswordModule() {
+  if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
+    instance.registerFactory<ForgotPasswordUseCase>(() => ForgotPasswordUseCase(instance()));
+    instance.registerFactory<ForgotPasswordViewModel>(() => ForgotPasswordViewModel(instance()));
   }
 }

@@ -1,3 +1,5 @@
+import 'package:complete_advanced_flutter/app/app_pref.dart';
+import 'package:complete_advanced_flutter/app/dependencyInjector.dart';
 import 'package:complete_advanced_flutter/domain/model/slider_object.dart';
 import 'package:complete_advanced_flutter/presentation/extension/widget_extension.dart';
 import 'package:complete_advanced_flutter/presentation/onboarding/onboarding_viewmodel.dart';
@@ -21,8 +23,10 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController(initialPage: 0);
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  final _appPreference = instance<AppPreferences>();
 
   void _bind(){
+    _appPreference.setOnBoardingScreen();
     _viewModel.start();
   }
 

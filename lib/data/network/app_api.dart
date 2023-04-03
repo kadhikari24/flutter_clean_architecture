@@ -1,4 +1,5 @@
 import 'package:complete_advanced_flutter/app/constants.dart';
+import 'package:complete_advanced_flutter/data/responses/forgot_password_response.dart';
 import 'package:complete_advanced_flutter/data/responses/responses.dart';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
@@ -15,4 +16,8 @@ abstract class AppServiceClient {
       @Field('password') required String password,
       @Field('imei') required String imei,
       @Field('deviceType') required String deviceType});
+
+  @POST('/customer/forgotPassword')
+  Future<ForgotPasswordResponse> forgotPassword(
+      {@Field('email') required String email});
 }

@@ -1,9 +1,8 @@
+import 'dart:async';
+
+import 'package:complete_advanced_flutter/app/app_pref.dart';
 import 'package:complete_advanced_flutter/app/dependencyInjector.dart';
-import 'package:complete_advanced_flutter/data/data_source/remote_data_source.dart';
-import 'package:complete_advanced_flutter/data/network/app_api.dart';
-import 'package:complete_advanced_flutter/data/respository/repository_impl.dart';
-import 'package:complete_advanced_flutter/domain/repository/repository.dart';
-import 'package:complete_advanced_flutter/domain/usecase/login_usecase.dart';
+import 'package:complete_advanced_flutter/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:complete_advanced_flutter/presentation/extension/widget_extension.dart';
 import 'package:complete_advanced_flutter/presentation/login/login_viewmodel.dart';
 import 'package:complete_advanced_flutter/presentation/resources/assets_manager.dart';
@@ -12,6 +11,7 @@ import 'package:complete_advanced_flutter/presentation/resources/routes_manager.
 import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
 import 'package:complete_advanced_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -24,12 +24,26 @@ class _LoginViewState extends State<LoginView> {
   final _viewModel = instance<LoginViewModel>();
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _formKey  = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  final _appPreference = instance<AppPreferences>();
+  late StreamSubscription _subscribeLogin;
+
 
   bind() {
     _viewModel.start();
-    _userNameController.addListener(() => _viewModel.setUserName(_userNameController.text));
-    _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
+    _userNameController
+        .addListener(() => _viewModel.setUserName(_userNameController.text));
+    _passwordController
+        .addListener(() => _viewModel.setPassword(_passwordController.text));
+    _subscribeLogin = _viewModel.isUserLoggedInSuccessfully.stream.listen((isSuccessLoggedIn) {
+
+      // navigate to main screen
+     // Navigator.of(context).pushReplacementNamed(Routes.mainRoute); // we shouldn't directly called in as it is inside the stream
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+        _appPreference.setUserLoggedIn(true);
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
+    });
   }
 
   @override
@@ -40,14 +54,20 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-   return _loginContent();
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapShot) =>
+              snapShot.data?.getScreenWidget(
+                  context, _loginContent(), () => _viewModel.login()) ??
+              _loginContent()),
+    );
   }
 
   Widget _loginContent() {
     final theme = Theme.of(context).textTheme;
-    return Scaffold(
-      backgroundColor: ColorManager.white,
-        body: Center(
+    return Center(
       child: SingleChildScrollView(
           child: Form(
         key: _formKey,
@@ -58,51 +78,53 @@ class _LoginViewState extends State<LoginView> {
             Image.asset(ImageAssets.splashLogo),
             const SizedBox(height: AppSize.s40),
             StreamBuilder(
-              stream: _viewModel.outputIsUserNameValid,
-              builder: (context, snapshot) {
-                return TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _userNameController,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.usernameHint,
-                    labelText: AppStrings.usernameHint,
-                    errorText: snapshot.data ?? true ? null : AppStrings.invalidEmail
-                  ),
-                );
-              }
-            ),
+                stream: _viewModel.outputIsUserNameValid,
+                builder: (context, snapshot) {
+                  return TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _userNameController,
+                    decoration: InputDecoration(
+                        hintText: AppStrings.usernameHint,
+                        labelText: AppStrings.usernameHint,
+                        errorText: snapshot.data ?? true
+                            ? null
+                            : AppStrings.invalidEmail),
+                  );
+                }),
             const SizedBox(height: AppSize.s10),
             StreamBuilder(
-              stream: _viewModel.outputIsPasswordValid,
-              builder: (context, snapshot) {
-                return TextFormField(
-                  obscureText: true,
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.passwordHint,
-                    labelText: AppStrings.passwordHint,
-                    errorText: snapshot.data ?? true ? null : AppStrings.invalidPassword
-                  ),
-                );
-              }
-            ),
+                stream: _viewModel.outputIsPasswordValid,
+                builder: (context, snapshot) {
+                  return TextFormField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                        hintText: AppStrings.passwordHint,
+                        labelText: AppStrings.passwordHint,
+                        errorText: snapshot.data ?? true
+                            ? null
+                            : AppStrings.invalidPassword),
+                  );
+                }),
             const SizedBox(height: AppSize.s20),
             StreamBuilder<bool?>(
-              stream: _viewModel.outputIsisAllInputsValid,
-              builder: (context, snapShot) {
-                return SizedBox(
-                  width: double.infinity,
-                  height: AppSize.s40,
-                  child: ElevatedButton(
-                      onPressed: !(snapShot.data ?? false) ? null : () => _viewModel.login(),
-                      child: const Text(AppStrings.btnLogin)),
-                );
-              }
-            ),
+                stream: _viewModel.outputIsisAllInputsValid,
+                builder: (context, snapShot) {
+                  return SizedBox(
+                    width: double.infinity,
+                    height: AppSize.s40,
+                    child: ElevatedButton(
+                        onPressed: !(snapShot.data ?? false)
+                            ? null
+                            : () => _viewModel.login(),
+                        child: const Text(AppStrings.btnLogin)),
+                  );
+                }),
             const SizedBox(height: AppSize.s10),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(Routes.forgotPasswordRoute);
+                  Navigator.of(context)
+                      .pushReplacementNamed(Routes.forgotPasswordRoute);
                 },
                 child: Text(
                   AppStrings.forgetPassword,
@@ -110,7 +132,8 @@ class _LoginViewState extends State<LoginView> {
                 )),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(Routes.registerRoute);
+                  Navigator.of(context)
+                      .pushReplacementNamed(Routes.registerRoute);
                 },
                 child: Text(
                   AppStrings.notAMemberSignUp,
@@ -120,11 +143,12 @@ class _LoginViewState extends State<LoginView> {
           ],
         ).addPadding(right: 20, left: 20, top: 20, bottom: 20),
       )),
-    ));
+    );
   }
 
   @override
   void dispose() {
+    _subscribeLogin.cancel();
     _viewModel.dispose();
     _userNameController.dispose();
     _passwordController.dispose();

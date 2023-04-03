@@ -147,7 +147,7 @@ class ErrorHandler implements Exception {
         }
         return DataSource.unknown.getFailure();
       case DioErrorType.badResponse:
-        return DataSource.noContent.getFailure();
+        return DataSource.notFound.getFailure();
       case DioErrorType.cancel:
         return DataSource.cancel.getFailure();
       case DioErrorType.connectionError:
