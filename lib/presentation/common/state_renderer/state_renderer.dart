@@ -14,6 +14,7 @@ enum StateRendererType {
   //popup states
   popupLoading,
   popupErrorState,
+  popupSuccess,
 
   // full screen states
   fullScreenLoadingState,
@@ -25,7 +26,7 @@ enum StateRendererType {
 class StateRenderer extends StatelessWidget {
   final StateRendererType stateRendererType;
   final String message;
-  final String title;
+  final String? title;
   final Function? retryActionFunction;
 
   const StateRenderer(
@@ -48,6 +49,13 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.popupErrorState:
         return _getPopupDialog(context, [
           _getAnimatedImage(JsonAssets.errorJson),
+          _getMessage(message),
+          _getRetryButton(AppStrings.btnOK, retryActionFunction, context)
+        ]);
+      case StateRendererType.popupSuccess:
+        return _getPopupDialog(context, [
+          _getAnimatedImage(JsonAssets.success),
+          _getMessage(title!),
           _getMessage(message),
           _getRetryButton(AppStrings.btnOK, retryActionFunction, context)
         ]);
@@ -125,6 +133,7 @@ class StateRenderer extends StatelessWidget {
       elevation: AppSize.s1_5,
       backgroundColor: Colors.transparent,
       child: Container(
+        constraints: BoxConstraints(maxWidth: AppSize.s300),
         decoration: BoxDecoration(
             color: ColorManager.white,
             shape: BoxShape.rectangle,

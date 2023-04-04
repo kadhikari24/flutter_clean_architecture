@@ -1,5 +1,6 @@
 import 'package:complete_advanced_flutter/data/mapper/mapper.dart';
 import 'package:complete_advanced_flutter/presentation/common/state_renderer/state_renderer.dart';
+import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 
 abstract class FlowState {
@@ -46,6 +47,19 @@ class ContentState extends FlowState {
   @override
   StateRendererType getStateRendererType() =>
       StateRendererType.contentScreenState;
+}
+
+// content state
+
+class SuccessState extends FlowState {
+  final String message;
+
+  SuccessState(this.message);
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() => StateRendererType.popupSuccess;
 }
 
 // empty state
@@ -100,6 +114,12 @@ extension FlowStateExtension on FlowState {
             stateRendererType: getStateRendererType(),
             retryActionFunction: retryActionFunction);
 
+      case SuccessState:
+        _dismissDialog(context);
+        _showPopup(context, getStateRendererType(), getMessage(),
+            title: AppStrings.dialogSuccessTitle);
+        return contentWidget;
+
       default:
         return contentWidget;
     }
@@ -113,13 +133,15 @@ extension FlowStateExtension on FlowState {
 
   _isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
 
-  _showPopup(BuildContext context, StateRendererType type, String message) {
+  _showPopup(BuildContext context, StateRendererType type, String message,{String title = empty}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) => StateRenderer(
                 stateRendererType: type,
                 message: message,
+                title: title,
                 retryActionFunction: () {},
               ));
     });

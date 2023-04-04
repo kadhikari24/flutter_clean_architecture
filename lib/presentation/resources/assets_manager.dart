@@ -11,6 +11,7 @@ class ImageAssets {
   static const String solidCircleIcon = '$IMAGE_PATH/solid_circle_ic.svg';
   static const String leftArrowIcon = '$IMAGE_PATH/left_arrow_ic.svg';
   static const String rightArrowIcon = '$IMAGE_PATH/right_arrow_ic.svg';
+  static const String cameraIcon = '$IMAGE_PATH/photo_camera_ic.svg';
 }
 
 class JsonAssets {
@@ -19,4 +20,5 @@ class JsonAssets {
   static const String emptyJson = '$LOTTIE_PATH/empty.json';
   static const String loading = '$LOTTIE_PATH/loading.json';
   static const String loadingOne = '$LOTTIE_PATH/loading_one.json';
+  static const String success = '$LOTTIE_PATH/success.json';
 }

@@ -74,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: AppSize.s40),
+            const SizedBox(height: AppSize.s10),
             Image.asset(ImageAssets.splashLogo),
             const SizedBox(height: AppSize.s40),
             StreamBuilder(
@@ -132,8 +132,7 @@ class _LoginViewState extends State<LoginView> {
                 )),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.registerRoute);
+                  Navigator.of(context).pushNamed(Routes.registerRoute);
                 },
                 child: Text(
                   AppStrings.notAMemberSignUp,

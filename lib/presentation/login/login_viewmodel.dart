@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:complete_advanced_flutter/app/functions.dart';
 import 'package:complete_advanced_flutter/domain/model/authentication.dart';
 import 'package:complete_advanced_flutter/domain/usecase/login_usecase.dart';
 import 'package:complete_advanced_flutter/presentation/base/base_view_model.dart';
@@ -22,6 +23,7 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void dispose() {
+     super.dispose();
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
@@ -42,6 +44,7 @@ class LoginViewModel extends BaseViewModel
   @override
   login() async {
     // show loading
+    removeFocus();
     inputState.add(LoadingState(
         stateRendererType: StateRendererType.popupLoading,
         message: AppStrings.loading));

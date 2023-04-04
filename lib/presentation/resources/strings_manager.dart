@@ -31,11 +31,19 @@ class AppStrings {
   static const String btnResetPassword = "Reset Password";
   static const String don_tReceiveEmailResent = "Don't receive email? Resend";
 
-
-
   // state render
   static const loading = "Loading...";
 
   static String btnRetry = "Retry";
   static String btnOK = "OK";
+  static String dialogSuccessTitle = "Success!!";
+
+  // register page
+  static const String btnRegister = 'Register';
+  static const String name = 'Name';
+  static const String number = 'Phone Number';
+  static const String alreadyHaveAnAccount = 'Already have an account? Login';
+  static const String profilePicture = 'Profile Picture';
+  static const String photoGallery = 'Photo from gallery';
+  static const String photoCamera  = 'Photo from Camera';
 }

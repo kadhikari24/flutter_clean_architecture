@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:complete_advanced_flutter/domain/model/device_info.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/widgets.dart';
 
 Future<DeviceInfo> getDeviceDetails() async {
   String name = "Unknown";
@@ -21,4 +22,12 @@ Future<DeviceInfo> getDeviceDetails() async {
     version = tempInfo.systemVersion;
   }
   return DeviceInfo(name, identifier, version);
+}
+
+bool isEmailValid(String email) {
+  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+}
+
+void removeFocus(){
+  FocusManager.instance.primaryFocus?.unfocus();
 }

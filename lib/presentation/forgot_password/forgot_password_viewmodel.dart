@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:complete_advanced_flutter/app/functions.dart';
+import 'package:complete_advanced_flutter/data/mapper/mapper.dart';
 import 'package:complete_advanced_flutter/data/network/failure.dart';
 import 'package:complete_advanced_flutter/domain/model/forgot_password.dart';
 import 'package:complete_advanced_flutter/domain/usecase/forgot_password_usecase.dart';
@@ -30,10 +32,12 @@ class ForgotPasswordViewModel extends BaseViewModel
   Sink get getEmailInput => _emailStringController.sink;
 
   @override
-  Stream<bool> get isValidEmail => _emailStringController.stream.map((email) => _isValidEmail(email));
+  Stream<bool> get isValidEmail =>
+      _emailStringController.stream.map((email) => _isValidEmail(email));
 
   @override
   void resetPassword() async {
+    removeFocus();
     inputState.add(LoadingState(
         stateRendererType: StateRendererType.popupLoading,
         message: AppStrings.loading));
@@ -42,8 +46,7 @@ class ForgotPasswordViewModel extends BaseViewModel
           stateRendererType: StateRendererType.popupErrorState,
           message: failure.message));
     }, (ForgotPassword password) {
-      inputState.add(ContentState());
-     print(password.support);
+      inputState.add(SuccessState(password.support ?? empty));
     });
   }
 
