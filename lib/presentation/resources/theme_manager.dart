@@ -46,6 +46,8 @@ ThemeData getThemeApplicationTheme() {
         titleLarge: getSemiBoldStyle(color: ColorManager.darkGrey,fontSize: FontSize.s16), //headLine1
         titleMedium: getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s14), // subtitle1
         titleSmall: getMediumStyle(color: ColorManager.primary, fontSize: FontSize.s14), // subtitle2 //
+        displayMedium: getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16), // subtitle2 //headline2
+        displayLarge: getSemiBoldStyle(color: ColorManager.primary, fontSize: FontSize.s16), // subtitle2 //headline2
         labelLarge: getRegularStyle(color: ColorManager.grey1), //caption
         bodyLarge: getRegularStyle(color: ColorManager.grey)),// bodyText1)
 

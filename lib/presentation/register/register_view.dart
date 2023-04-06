@@ -180,7 +180,7 @@ class _RegisterViewState extends State<RegisterView> {
                         onPressed: !(snapShot.data ?? false)
                             ? null
                             : () => _viewModel.register(),
-                        child: const Text(AppStrings.btnRegister)),
+                        child: Text(AppStrings.btnRegister)),
                   );
                 }),
             const SizedBox(height: AppSize.s20),
@@ -204,7 +204,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _mediaWidget() {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      const Flexible(child: Text(AppStrings.profilePicture)),
+      Flexible(child: Text(AppStrings.profilePicture)),
       Flexible(
           child: StreamBuilder<String?>(
               stream: _viewModel.outputProfilePicture,
@@ -233,7 +233,7 @@ class _RegisterViewState extends State<RegisterView> {
             ListTile(
               trailing: const Icon(Icons.arrow_forward),
               leading: const Icon(Icons.camera),
-              title: const Text(AppStrings.photoGallery),
+              title: Text(AppStrings.photoGallery),
               onTap: () {
                 _imageFormGallery();
                 Navigator.of(context).pop();
@@ -242,7 +242,7 @@ class _RegisterViewState extends State<RegisterView> {
             ListTile(
               trailing: const Icon(Icons.arrow_forward),
               leading: const Icon(Icons.camera_alt),
-              title: const Text(AppStrings.photoCamera),
+              title: Text(AppStrings.photoCamera),
               onTap: () {
                 _imageFromCamera();
                 Navigator.of(context).pop();

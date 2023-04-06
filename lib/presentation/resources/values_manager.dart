@@ -9,6 +9,7 @@ class AppMargin {
 }
 
 class AppPadding {
+  static const double p4 = 4.0;
   static const double p8 = 8.0;
   static const double p12 = 12.0;
   static const double p14 = 14.0;
@@ -36,11 +37,18 @@ class AppSize {
 
   static var s100 = 100.0;
   static var s150 = 150.0;
+  static var s190 = 190.0;
   static var s300 = 300.0;
+  static var s400 = 400.0;
+  static var s450 = 450.0;
+  static var s500 = 500.0;
+
+  static var s140 = 140.0;
+
+  static var s120 = 120.0;
 }
 
-class DurationConstant{
-  static const int  d300 = 300;
-  static const Duration  d300milliSecond = Duration(milliseconds: 300);
-
+class DurationConstant {
+  static const int d300 = 300;
+  static const Duration d300milliSecond = Duration(milliseconds: 300);
 }

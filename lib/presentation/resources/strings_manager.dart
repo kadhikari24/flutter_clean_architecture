@@ -1,49 +1,64 @@
+
 class AppStrings {
-  static const String noRouteFound = "No Route Found";
-  static const String onBoardingTitle1 = "SEE THE BEST COURSE #1";
-  static const String onBoardingTitle2 = "SEE THE BEST COURSE #2";
-  static const String onBoardingTitle3 = "SEE THE BEST COURSE #3";
-  static const String onBoardingTitle4 = "SEE THE BEST COURSE #4";
+  static String noRouteFound = "noRouteFound";
+  static  String onBoardingTitle1 = "onBoardingTitle1";
+  static  String onBoardingTitle2 = "onBoardingTitle2";
+  static  String onBoardingTitle3 = "onBoardingTitle3";
+  static  String onBoardingTitle4 = "onBoardingTitle4";
 
-  static const String onBoardingSubtitle1 =
-      "This app is an awesome flutter application using clean architecture #1";
-  static const String onBoardingSubtitle2 =
-      "This app is an awesome flutter application using clean architecture #2";
-  static const String onBoardingSubtitle3 =
-      "This app is an awesome flutter application using clean architecture #3";
-  static const String onBoardingSubtitle4 =
-      "This app is an awesome flutter application using clean architecture #4";
+  static  String onBoardingSubtitle1 = "onBoardingSubtitle1";
+  static  String onBoardingSubtitle2 = "onBoardingSubtitle2";
+  static  String onBoardingSubtitle3 = "onBoardingSubtitle3";
+  static  String onBoardingSubtitle4 = "onBoardingSubtitle4";
 
-  static const String skip = 'Skip';
+  static  String skip = 'skip';
 
   //login screen
-  static const String btnLogin = 'Login';
-  static const String usernameHint = 'Username';
-  static const String passwordHint = 'Password';
-  static const String forgetPassword = 'Forgot Password';
-  static const String notAMemberSignUp = 'Not a member? sign up';
+  static  String btnLogin = 'btnLogin';
+  static  String usernameHint = 'usernameHint';
+  static  String passwordHint = 'passwordHint';
+  static  String forgetPassword = 'forgetPassword';
+  static  String notAMemberSignUp = 'notAMemberSignUp';
 
-  static const String invalidEmail = 'Invalid user name';
-  static const String invalidPassword = 'Invalid password';
+  static  String invalidEmail = 'invalidEmail';
+  static  String invalidPassword = 'invalidPassword';
 
   // forgot password
-  static const String emailHint = 'Email';
-  static const String btnResetPassword = "Reset Password";
-  static const String don_tReceiveEmailResent = "Don't receive email? Resend";
+  static  String emailHint = 'emailHint';
+  static  String btnResetPassword = "btnResetPassword";
+  static  String don_tReceiveEmailResent = "don_tReceiveEmailResent";
 
   // state render
-  static const loading = "Loading...";
+  static  String loading = "loading";
 
-  static String btnRetry = "Retry";
-  static String btnOK = "OK";
-  static String dialogSuccessTitle = "Success!!";
+  static String btnRetry = "btnRetry";
+  static String btnOK = "btnOK";
+  static String dialogSuccessTitle = "dialogSuccessTitle";
 
   // register page
-  static const String btnRegister = 'Register';
-  static const String name = 'Name';
-  static const String number = 'Phone Number';
-  static const String alreadyHaveAnAccount = 'Already have an account? Login';
-  static const String profilePicture = 'Profile Picture';
-  static const String photoGallery = 'Photo from gallery';
-  static const String photoCamera  = 'Photo from Camera';
+  static  String btnRegister = 'btnRegister';
+  static  String name = 'name';
+  static  String number = 'number';
+  static  String alreadyHaveAnAccount = 'alreadyHaveAnAccount';
+  static  String profilePicture = 'profilePicture';
+  static  String photoGallery = 'photoGallery';
+  static  String photoCamera = 'photoCamera';
+
+  //main page
+  static  String notifications = 'notifications';
+  static  String home = 'home';
+  static  String settings = 'settings';
+  static  String search = 'search';
+
+  // home page title
+  static  String services = 'services';
+  static  String stores = 'stores';
+  static  String storeDetails = 'storeDetails';
+  static  String details = 'details';
+  static  String aboutStore = 'aboutStore';
+
+  static  String changeLanguage = "changeLanguage";
+  static  String contactUs = "contactUs";
+  static  String inviteYourFriend = "inviteYourFriend";
+  static  String logout = "logout";
 }

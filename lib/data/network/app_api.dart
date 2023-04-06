@@ -1,6 +1,8 @@
 import 'package:complete_advanced_flutter/app/constants.dart';
 import 'package:complete_advanced_flutter/data/responses/forgot_password_response.dart';
+import 'package:complete_advanced_flutter/data/responses/home/home.dart';
 import 'package:complete_advanced_flutter/data/responses/responses.dart';
+import 'package:complete_advanced_flutter/data/responses/store_detail/store_detail.dart';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 
@@ -29,4 +31,10 @@ abstract class AppServiceClient {
       @Field('phoneNumber') required String phoneNumber,
       @Field('countryCode') required String countryCode,
       @Field('userName') required String userName});
+
+  @GET('/customer/home')
+  Future<HomeResponse> getHome();
+
+  @GET('/storeDetail/1')
+  Future<StoreDetailResponse> getStoreDetails();
 }

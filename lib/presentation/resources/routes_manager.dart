@@ -7,6 +7,7 @@ import 'package:complete_advanced_flutter/presentation/register/register_view.da
 import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
 import 'package:complete_advanced_flutter/presentation/splash/splash_view.dart';
 import 'package:complete_advanced_flutter/presentation/store_details/store_details_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -37,8 +38,10 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => const ForgotPasswordView());
       case Routes.mainRoute:
+        initHomePageModule();
         return MaterialPageRoute(builder: (context) => const MainView());
       case Routes.storeDetailRoute:
+        initStoreDetailsModule();
         return MaterialPageRoute(
             builder: (context) => const StoreDetailsView());
       default:
@@ -49,9 +52,9 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
         builder: (context) => Scaffold(
-              body: const Center(child: Text(AppStrings.noRouteFound)),
+              body:  Center(child: Text(AppStrings.noRouteFound).tr()),
               appBar: AppBar(
-                title: const Text(AppStrings.noRouteFound),
+                title: Text(AppStrings.noRouteFound).tr(),
               ),
             ));
   }

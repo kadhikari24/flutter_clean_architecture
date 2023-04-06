@@ -4,11 +4,11 @@ import 'package:complete_advanced_flutter/domain/model/slider_object.dart';
 import 'package:complete_advanced_flutter/presentation/base/base_view_model.dart';
 import 'package:complete_advanced_flutter/presentation/resources/assets_manager.dart';
 import 'package:complete_advanced_flutter/presentation/resources/strings_manager.dart';
+import 'package:rxdart/rxdart.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
-  final StreamController _streamController =
-      StreamController<SliderViewObject>();
+  final  _streamController = BehaviorSubject<SliderViewObject>();
   late final List<SliderObject> list;
 
   int _currentPage = 0;

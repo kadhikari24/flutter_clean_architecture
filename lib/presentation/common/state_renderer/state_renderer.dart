@@ -29,13 +29,13 @@ class StateRenderer extends StatelessWidget {
   final String? title;
   final Function? retryActionFunction;
 
-  const StateRenderer(
+   StateRenderer(
       {super.key,
       required this.stateRendererType,
       Failure? failure,
-      this.message = AppStrings.loading,
+      String? message,
       this.title = empty,
-      required this.retryActionFunction});
+      required this.retryActionFunction}): message = message ?? AppStrings.loading;
 
   @override
   Widget build(BuildContext context) {

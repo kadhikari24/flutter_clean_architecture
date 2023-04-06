@@ -117,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: !(snapShot.data ?? false)
                             ? null
                             : () => _viewModel.login(),
-                        child: const Text(AppStrings.btnLogin)),
+                        child: Text(AppStrings.btnLogin)),
                   );
                 }),
             const SizedBox(height: AppSize.s10),
